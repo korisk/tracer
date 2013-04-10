@@ -4,5 +4,4 @@ tracer.tcc - is the tracer. tcc because the file comprises definition of variabl
 
 test.cpp - simple tracer test for std::string
 
-
 calc5.cpp - example from boost::spirit documentation modified for using with tracer
