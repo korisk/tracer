@@ -36,6 +36,12 @@ std::ostream_iterator<char> out_it (std::cout,", ");
 	X::show("a < b;");
 	a == b;
 	X::show("a == b;");
+	#if __cplusplus > 199711L
+	[](X y)->X{return y.v;}(b);
+	X::show("[](X y)->X{return y.v;}(b);");
+	a = [](X y)->X{return y;}(b);
+	X::show("a = [](X y)->X{return y;}(b);");
+	#endif
 }
 	X::show("}");
 	std::cout << std::endl;
@@ -89,11 +95,11 @@ A sorry skiff on the broad spate
 	X::show("xs s4(s1.begin(), s1.begin()+7);");
 	xs s5(s2);
 	X::show("xs s5(s2);");
-	s5[0]='a';
+	s5[0] = 'a';
 	X::show("s5[0]='a';");
 	xs s6(s1);
 	X::show("xs s6(s1);");
-	s6[0]='a';
+	s6[0] = 'a';
 	X::show("s6[0]='a';");
 	xs s7(s1,1,5);
 	X::show("xs s7(s1,1,5);");
@@ -102,6 +108,11 @@ A sorry skiff on the broad spate
 	X::show("xs s8=[]()->xs{xs a((X*)\"lol\");return a;}();");
 	std::cout << (char*)s8.data() << std::endl;
 	#endif
+	xs s9((X*)"1234567890");
+	X::show("xs s9((X*)\"1234567890\");");
+	X n= s9[0];
+	X::show("X n = s9[0];");
+
 //----------------------------------------------------------------
 
 	int a = s1.size();

@@ -2,12 +2,13 @@
 #define __TRACER_FOR_STRING__
 
 #include <iostream>
+//include <ext/vstring.h>
 #include <string>
 #include <iomanip>
 #include <iterator>
 
-#define habr 0
-#if habr == 1
+#define habr 1
+#if habr == 0
 #	define delimitera  	"</td><td>"
 #	define delimiterb  	"</td><td>"
 #	define fin 		"</td></tr>"
@@ -37,6 +38,11 @@ struct X{
 	X(X const& x):v(x.v) { X::c[copy]++; };
 	~X(){ X::c[dtor]++; };
 
+#if __cplusplus > 199711L
+	X(X && x):v(x.v) { X::c[copy]++; };
+	X& operator=(X && x) { X::c[assgn]++; v=x.v; return *this; };
+		
+#endif
 	X& operator=(X const& x) { X::c[assgn]++; v=x.v; return *this; };
 	X& operator=(char x) { X::c[assgn]++; v = x;   return *this; };
 	X& operator()(char x) { X::c[cast]++; v = x;   return *this; };// X a = X('c');
@@ -73,7 +79,7 @@ int X::c[X::last] = {0};
 
 
 typedef ::std::basic_string<X> xs;
-
+//typedef __gnu_cxx::__versa_string<X> xs;
 ::std::ostream& operator<<(::std::ostream& out, xs &dat) { out << (char*)(dat.data()); return out; }
 //X * operator X*(const char* dat){ return (X*)(dat); }
 }
